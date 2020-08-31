@@ -9,12 +9,17 @@ mkdir build
 cd build
 
 ### 1. Regular build
-# cmake ..         # conf
-# cmake --build .  # build
+cmake ..         # conf
+cmake --build .  # build
+
+### x. clang-tidy
+# cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ..
+# ../bin/run-clang-tidy.py
 
 ### 2. scan-build (clang-10, c++17)
-scan-build -v --use-analyzer /usr/local/opt/llvm/bin/clang++ cmake ..
-make
+# scan-build -v --use-analyzer /usr/local/opt/llvm/bin/clang++ cmake ..
+# scan-build -v --use-analyzer /usr/local/opt/llvm/bin/clang++ cmake --build .
+## or make
 
 ### 3. scan-build (clang-4)
 # scan-build -v --use-analyzer /usr/local/bin/clang++ cmake ..

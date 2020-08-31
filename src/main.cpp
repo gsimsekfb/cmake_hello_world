@@ -1,4 +1,5 @@
-#include<iostream>
+#include <iostream>
+#include "foo.h"
 
 class Obj
 {
@@ -8,14 +9,16 @@ public:
     ~Obj(){}   
 };
 
-struct Foo {
-    Foo() {};  
-    ~Foo() {}; 
-    int _count; /// VS: warning C26495: Variable 'Foo::_count' is uninitialized.     
+struct Zoo {
+    Zoo() {};  
+    ~Zoo() {}; 
+    int _count; /// VS: warning C26495: Variable 'Zoo::_count' is uninitialized.     
 };
 
 int test2(int x){
-  return 5/(x-x); // scan-build: warning: Division by zerowarn
+    /// clang-tidy: warning: non-void function does not return a value 
+    // [clang-diagnostic-return-type]
+	return 0;
 }
 
 int main(int argc, char *argv[])
@@ -29,7 +32,21 @@ int main(int argc, char *argv[])
 	#pragma warning( pop )
     #endif
     
-    std::cout << "Hello World" << std::endl;
+    std::cout << "Hello World - " << std::endl;
 
-	return 0;
+    /// 
+    // foo();    // divide by zero
+
+	/// clang compiler warning: 
+    // warning: implicit conversion changes signedness: 'int' to 'std::size_t' 
+    // (aka 'unsigned long long') [-Wsign-conversion]  
+	std::size_t bigstuff = -1;	// clang++ -Weverthing or -Wsign-conversion
+	int *y = new int; 
+	  /// scan-build, clang-tidy: warning: Value stored to 'y' during its initialization 
+      // is never read [clang-analyzer-deadcode.DeadStores]
+    int x = 42;
+  	// return 5/(x-x);  /// scan-build, clang-tidy: warning: Division by zerowarn
+    return 0;  
+        /// clang-tidy: warning: Potential leak of memory pointed to by 'x' 
+        // [clang-analyzer-cplusplus.NewDeleteLeaks]
 }
