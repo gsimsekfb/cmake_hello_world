@@ -1,10 +1,12 @@
 # cmake_hello_world
 
+## Minimum cmake setup for a C++17 project
+
+### Basic Usage
 ```
-mkdir build && cd build	
-cmake ..
-cmake --build .
-Debug\hello.exe
-(make)
-(./hello)
+cd bin
+clean
+configure
+build
+run
 ```
