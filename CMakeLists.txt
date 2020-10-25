@@ -8,5 +8,4 @@ project (hello)
 add_executable(
     hello 
     src/main.cpp 
-    src/foo.cpp
 )
