@@ -2,6 +2,9 @@
 
 ## Minimum cmake setup for a C++17 project
 
+**Supported platforms:**   
+Windows, macOS, Linux
+
 ### Basic Usage
 ```
 cd bin
